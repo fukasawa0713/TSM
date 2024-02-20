@@ -1,4 +1,6 @@
 package jp.main.servlet;
 
-public class TeacherInsert {
+import javax.servlet.http.HttpServlet;
+
+public class TeacherInsert extends HttpServlet {
 }

@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class JdbcTest {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/sd";
+    private static final String URL = "jdbc:mysql://localhost:3306/TSM";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "Fukasawa0713";
 
     // DB接続、コレクションを取得
     public static Connection getConnection() throws SQLException {
@@ -62,6 +62,18 @@ public class JdbcTest {
 
     //   SQL実行（更新系）
     public static void executeUpdate(String sql, int id, String name) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = JdbcTest.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, name);
+            preparedStatement.executeUpdate();
+        } catch (SQLException we) {
+            throw we;
+        }
+    }
+    public static void executeInsert(String sql, int id, String name)throws SQLException{
         Connection connection = null;
         try {
             connection = JdbcTest.getConnection();
