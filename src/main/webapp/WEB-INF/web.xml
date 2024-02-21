@@ -4,45 +4,46 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-    <servlet-name>ServletTest</servlet-name>
-    <servlet-class>jp.main.servlet.ServletTest</servlet-class>
-  </servlet>
-
-
 
   <servlet>
-    <servlet-name>TeacherSearch</servlet-name>
-    <servlet-class>jp.main.servlet.TeacherSearch</servlet-class>
+    <servlet-name>TeacherInfoServlet</servlet-name>
+    <servlet-class>jp.main.servlet.TeacherInfoServlet</servlet-class>
   </servlet>
 
   <servlet>
-    <servlet-name>TeacherUpdate</servlet-name>
-    <servlet-class>jp.main.servlet.TeacherUpdate</servlet-class>
+    <servlet-name>TeacherSearchServlet</servlet-name>
+    <servlet-class>jp.main.servlet.TeacherSearchServlet</servlet-class>
   </servlet>
 
   <servlet>
-    <servlet-name>TeacherInsert</servlet-name>
-    <servlet-class>jp.main.servlet.TeacherInsert</servlet-class>
+    <servlet-name>TeacherUpdateServlet</servlet-name>
+    <servlet-class>jp.main.servlet.TeacherUpdateServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>TeacherInsertServlet</servlet-name>
+    <servlet-class>jp.main.servlet.TeacherInsertServlet</servlet-class>
+  </servlet>
+
+
   <servlet-mapping>
-    <servlet-name>ServletTest</servlet-name>
-    <url-pattern>/ServletTest</url-pattern>
+    <servlet-name>TeacherSearchServlet</servlet-name>
+    <url-pattern>/TeacherSearchServlet</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>TeacherSearch</servlet-name>
-    <url-pattern>/servlet/SearchServlet</url-pattern>
+    <servlet-name>TeacherUpdateServlet</servlet-name>
+    <url-pattern>/TeacherUpdateServlet</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>TeacherUpdate</servlet-name>
-    <url-pattern>/servlet/UpdateServlet</url-pattern>
+    <servlet-name>TeacherInsertServlet</servlet-name>
+    <url-pattern>/TeacherInsertServlet</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>TeacherInsert</servlet-name>
-    <url-pattern>/servlet/InsertServlet</url-pattern>
+    <servlet-name>TeacherInfoServlet</servlet-name>
+    <url-pattern>/TeacherInfoServlet</url-pattern>
   </servlet-mapping>
+
 </web-app>

@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class JdbcTest {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/TSM";
+    private static final String URL = "jdbc:mysql://localhost:3306/TEST";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "Fukasawa0713";
 
@@ -39,7 +39,6 @@ public class JdbcTest {
         try {
             connection = JdbcTest.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setString(1, name);
             return preparedStatement.executeQuery();
         } catch (SQLException we) {
             throw we;
