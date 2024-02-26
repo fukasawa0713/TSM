@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class TeacherSearchServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         TeacherService teacherService = new TeacherService();
         PrintWriter out = null;
         Connection conn = null;

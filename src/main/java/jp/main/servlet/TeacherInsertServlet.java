@@ -1,5 +1,6 @@
 package jp.main.servlet;
 
+import jp.main.base.JdbcTest;
 import jp.main.model.Teacher;
 import jp.main.service.TeacherService;
 
@@ -17,6 +18,7 @@ public class TeacherInsertServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("Shift_JIS");
         response.setCharacterEncoding("Shift_JIS");
+        Connection conn = null;
 
         // フォームから送信されたデータを取得
         int id = Integer.parseInt(request.getParameter("id"));
@@ -26,8 +28,6 @@ public class TeacherInsertServlet extends HttpServlet {
         String course = request.getParameter("course");
 
         TeacherService teacherService = new TeacherService();
-
-
 
         try {
             // 既存のIDが存在するか確認
@@ -64,6 +64,8 @@ public class TeacherInsertServlet extends HttpServlet {
             }
         } catch (SQLException e) {
             throw new ServletException("Error inserting teacher data", e);
+        }finally {
+            JdbcTest.closeConnection(conn);
         }
     }
 

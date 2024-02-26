@@ -33,5 +33,6 @@ public class TeacherService {
     public boolean UpdateTeacher(int id, String name,String gender, int age, String course)throws SQLException{
         return dao.UpdateTeacher(id, name, gender, age, course);
     }
+
 }
 

@@ -19,7 +19,7 @@
 
 教師番号：<%= teacherId%>名前：<%= name%><br>
 登録成功<br>
-<form action = "<%=request.getContextPath()%>/TSM/teacherList.jsp">
+<form action = "<%=request.getContextPath()%>/index.jsp">
 <button id ="topBtn">トップページへ</button>
 </form>
 </body>

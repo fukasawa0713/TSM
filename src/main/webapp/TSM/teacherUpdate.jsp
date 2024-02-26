@@ -19,7 +19,7 @@
         </tr>
         <tr>
             <th>名前:</th>
-            <td><input type="text" id="teacherName" value="<%= ((Teacher) request.getAttribute("teacherInfo")).getName() %>"></td>
+            <td><input type="text" name ="teacherName" id="teacherName" value="<%= ((Teacher) request.getAttribute("teacherInfo")).getName() %>"></td>
         </tr>
         <td>
             <input type="radio" name="gender" id="male"  value="男" <%= ((Teacher) request.getAttribute("teacherInfo")).getGender().equals("男") ? "checked" : "" %>>
@@ -29,7 +29,7 @@
         </td>
         <tr>
             <th>年齢:</th>
-            <td><input type="text" id="teacherAge" value="<%= ((Teacher) request.getAttribute("teacherInfo")).getAge() %>"></td>
+            <td><input type="text"  name = "age" id="teacherAge" value="<%= ((Teacher) request.getAttribute("teacherInfo")).getAge() %>"></td>
         </tr>
         <tr>
         <th>コース:</th>

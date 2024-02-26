@@ -24,21 +24,22 @@ public class TeacherUpdateServlet extends HttpServlet {
             response.setCharacterEncoding("shift_jis");
 
 
-            int teacherId = Integer.parseInt(request.getParameter("teacherId"));
-            String teacherName = request.getParameter("teacherName");
+            int teacherId = Integer.parseInt(request.getParameter("id"));
+            String teacherName = request.getParameter("name");
             String gender = request.getParameter("gender");
             int age = Integer.parseInt(request.getParameter("age"));
             String course = request.getParameter("course");
 
-            TeacherService teacher =new TeacherService();
+            boolean success = teacherService.UpdateTeacher(teacherId, teacherName, gender, age, course);
+            if (success) {
+                request.getRequestDispatcher("/TSM/teacherUpdateSuccess.jsp").forward(request,response);
 
-            boolean success = teacher.UpdateTeacher(teacherId,teacherName, gender, age, course);
-            if(success){
-                request.getRequestDispatcher("/TSM/teacherUpdateConfirm.jsp").forward(request,response);
+            } else {
+                request.getRequestDispatcher("/TSM/teacherUpdateFail.jsp").forward(request,response);
+
             }
 
-
-        } catch (IOException | SQLException | ServletException e) {
+        } catch (IOException | ServletException | SQLException e) {
             throw new RuntimeException(e);
         }
     }

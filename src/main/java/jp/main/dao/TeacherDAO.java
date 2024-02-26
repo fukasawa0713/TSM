@@ -24,7 +24,7 @@ public class TeacherDAO {
             tc.setId(tid);
             tc.setName(name);
             tc.setGender(gender);
-            tc.setAge(age);
+            tc.setAge(Integer.parseInt(age));
             tc.setCourse(course);
         }
         return tc;
@@ -66,7 +66,7 @@ public class TeacherDAO {
             teacher.setId(id);
             teacher.setName(name);
             teacher.setGender(gender);
-            teacher.setAge(String.valueOf(age));
+            teacher.setAge(age);
             teacher.setCourse(course);
 
             teacherList.add(teacher);
@@ -110,6 +110,8 @@ public class TeacherDAO {
         }
         return exists;
     }
+
+
 
 }
 

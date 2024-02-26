@@ -16,10 +16,11 @@ import java.util.Objects;
 
 public class TeacherCountServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("Shift_JIS");
-        response.setCharacterEncoding("Shift_JIS");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         Connection conn = null;
+        TeacherService teacherService = new TeacherService();
 
         // フォームから送信されたデータを取得
         int teacherId = Integer.parseInt(request.getParameter("teacherId"));
@@ -27,40 +28,25 @@ public class TeacherCountServlet extends HttpServlet {
         String gender = request.getParameter("gender");
         String age = request.getParameter("age");
         String course = request.getParameter("course");
+        request.setAttribute("番号",teacherId);
+        request.setAttribute("名前",name);
+        request.setAttribute("性別",gender);
+        request.setAttribute("年齢",age);
+        request.setAttribute("コース",course);
 
-        TeacherService teacherService = new TeacherService();
+
+        Teacher tc;
         try {
-            // 既存のIDが存在するか確認
-            boolean idExists = teacherService.countId(teacherId);
-
-            if(idExists) {
-                Teacher success = teacherService.getInfoById(teacherId);
-                if (!Objects.equals(success.getName(), name)){
-                    request.setAttribute("名前",name);
-                }else {
-
-                }
-                if(!Objects.equals(success.getGender(), gender)){
-                    request.setAttribute("性別",gender);
-                }else {
-
-                }
-                if(!Objects.equals(success.getAge(), age)){
-                    request.setAttribute("年齢",age);
-                }else {
-
-                }
-                if(!Objects.equals(success.getCourse(), course)){
-                    request.setAttribute("コース",course);
-                }
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/TSM/teacherUpdateConfirm.jsp");
-                dispatcher.forward(request, response);
-
-            }
+            tc = teacherService.getInfoById(teacherId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            JdbcTest.closeConnection(conn);
         }
+        request.setAttribute("教師",tc.getId());
+        request.setAttribute("教師名",tc.getName());
+        request.setAttribute("教師性別",tc.getGender());
+        request.setAttribute("年",tc.getAge());
+        request.setAttribute("教科",tc.getCourse());
+
+        request.getRequestDispatcher("/TSM/teacherUpdateConfirm.jsp").forward(request,response);
     }
 }

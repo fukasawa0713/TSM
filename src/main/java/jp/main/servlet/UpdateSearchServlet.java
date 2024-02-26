@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class UpdateSearchServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         TeacherService teacherService = new TeacherService();
         PrintWriter out = null;
         Connection conn = null;
@@ -37,11 +37,7 @@ public class UpdateSearchServlet extends HttpServlet {
             request.getRequestDispatcher("/TSM/teacherUpdate.jsp").forward(request,response);
 
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ServletException e) {
+        } catch (IOException | SQLException | ServletException e) {
             throw new RuntimeException(e);
         } finally {
             if (out != null) {

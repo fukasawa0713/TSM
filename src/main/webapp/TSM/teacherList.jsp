@@ -16,7 +16,7 @@
     List<Teacher> teacherList = ((List<Teacher>) request.getAttribute("teacherList"));
     request.setAttribute("teacherList",teacherList);
 %>
-<form id="searchForm" action="<%=request.getContextPath()%>/TeacherSearchServlet" method="GET" >
+<form id="searchForm" action="<%=request.getContextPath()%>/TeacherSearchServlet" method="POST" >
     教師番号:<input type="text" maxlength ="5" pattern ="^[0-9]*$" id="id" name="id" size="20">
     名前：<input type="text" name="name" id= "name" size="20">
     コース：<select name="course" id = "course">
@@ -51,7 +51,7 @@
             <td><%= teacher.getAge() %></td>
             <td><%= teacher.getCourse() %></td>
             <td>
-            <form action = "<%=request.getContextPath()%>/UpdateSearchServlet" method ="GET">
+            <form action = "<%=request.getContextPath()%>/UpdateSearchServlet" method ="POST">
                 <input type="hidden" id="teacherId" name="teacherId" value="<%= teacher.getId() %>">
                 <input type="submit"  name="teacherId" value="更新">
             </form>
@@ -99,7 +99,13 @@
         let tableBody = $('#resultTable tbody');
         tableBody.empty();
 
-        if ($.isArray(teacherInfo)) {
+        if (teacherInfo === null || teacherInfo.length === 0) {
+            // 該当情報がnullまたは空の場合の処理
+            let row = $('<tr>');
+            let messageCell = $('<td colspan="6">').text("該当情報はありませんでした").appendTo(row);
+            row.appendTo(tableBody);
+        } else if ($.isArray(teacherInfo)) {
+            // teacherInfoが配列の場合の処理
             $.each(teacherInfo, function(index, teacher) {
                 let row = $('<tr>');
                 $('<td>').text(teacher.id).appendTo(row);
@@ -107,10 +113,13 @@
                 $('<td>').text(teacher.gender).appendTo(row);
                 $('<td>').text(teacher.age).appendTo(row);
                 $('<td>').text(teacher.course).appendTo(row);
-                $('<td>').html('<button class="updateBtn">更新</button>').appendTo(row);
+                let form = $('<form action="<%=request.getContextPath()%>/UpdateSearchServlet" method="POST">').appendTo($('<td>').appendTo(row));
+                $('<input type="hidden" id="teacherId" name="teacherId" value="' + teacher.id + '">').appendTo(form);
+                $('<button type="submit">更新</button>').appendTo(form);
                 row.appendTo(tableBody);
             });
         } else {
+            // その他の形式の場合の処理
             console.error("Invalid teacherInfo format: Not an array");
         }
     }
