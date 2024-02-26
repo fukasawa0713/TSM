@@ -10,17 +10,25 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
-    <form>
-         教師番号:<input type ="text" name ="sid" size ="20"><sub>*</sub><br>
-         名前：<input type="text" name="name" size="20"><sub>*</sub><br>
-         性別:<input type="radio" name="gender" value="男">男
-             <input type="radio" name="gender" value="女">女<sub>*</sub><br>
-         年齢：<input type ="text" name ="age" size ="20"><sub>*</sub><br>
-         コース:<input type = "text" name = "course" size="20"><sub>*</sub><br>
+    <form name ="newForm" action = "<%=request.getContextPath()%>/TeacherInsertServlet" method = "POST">
+         教師番号:<input type ="text" maxlength="5" pattern = "^[0-9]*$" name ="id" id ="id" required size ="20"><sub>*</sub><br>
+         名前：<input type="text" name="name" id ="name" required size="20"><sub>*</sub><br>
+         性別:<input type="radio" name="gender" id ="gender" required value="男">男
+             <input type="radio" name="gender" id ="gender" required value="女">女<sub>*</sub><br>
+         年齢：<input type ="text" name ="age" id ="age" required size ="20"><sub>*</sub><br>
+         コース：<select name="course" id = "course" required >
+                 <option value=""></option>
+                 <option>英語</option>
+                 <option>数学</option>
+                 <option>日本語</option>
+                 <option>中文</option>
+         </select>
          *印がついている項目は必須項目です。<br>
          <button id = "insertBtn">登録</button>
-         <button id ="resetBtn">リセット</button>
+         <input type ="reset" value = "リセット">
     </form>
+
+
 
 </body>
 </html>

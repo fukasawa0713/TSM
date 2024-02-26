@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html;charset=Shift_JIS" %>
+<%@ page import="jp.main.model.Teacher" %>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <h1>教師情報更新</h1>
 </head>
 <body>
@@ -9,15 +11,43 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-    <form>
-        教師番号:<input type ="text" name ="sid" size ="20"><br>
-        名前：<input type="text" name="name" size="20"><br>
-        性別:<input type="radio" name="gender" value="男">男
-            <input type="radio" name="gender" value="女">女<br>
-        年齢：<input type ="text" name ="age" size ="20"><br>
-        コース:<input type = "text" name = "course" size="20"><br>
-        <button id = "insertBtn">更新</button>
-        <button id ="resetBtn">リセット</button>
+<form action ="<%=request.getContextPath()%>/TeacherCountServlet" method = "POST">
+    <table id="updateTable">
+        <tr>
+            <th>教師番号:</th>
+            <td><input type="text" id="teacherId" name="teacherId" value="<%= ((Teacher) request.getAttribute("teacherInfo")).getId() %>" readonly></td>
+        </tr>
+        <tr>
+            <th>名前:</th>
+            <td><input type="text" id="teacherName" value="<%= ((Teacher) request.getAttribute("teacherInfo")).getName() %>"></td>
+        </tr>
+        <td>
+            <input type="radio" name="gender" id="male"  value="男" <%= ((Teacher) request.getAttribute("teacherInfo")).getGender().equals("男") ? "checked" : "" %>>
+            <label for="male">男</label>
+            <input type="radio" name="gender" id="female"  value="女" <%= ((Teacher) request.getAttribute("teacherInfo")).getGender().equals("女") ? "checked" : "" %>>
+            <label for="female">女</label>
+        </td>
+        <tr>
+            <th>年齢:</th>
+            <td><input type="text" id="teacherAge" value="<%= ((Teacher) request.getAttribute("teacherInfo")).getAge() %>"></td>
+        </tr>
+        <tr>
+        <th>コース:</th>
+        <td>
+            <select name="course" id="course" >
+                <option value=""></option>
+                <option <%= ((Teacher) request.getAttribute("teacherInfo")).getCourse().equals("英語") ? "selected" : "" %>>英語</option>
+                <option <%= ((Teacher) request.getAttribute("teacherInfo")).getCourse().equals("数学") ? "selected" : "" %>>数学</option>
+                <option <%= ((Teacher) request.getAttribute("teacherInfo")).getCourse().equals("日本語") ? "selected" : "" %>>日本語</option>
+                <option <%= ((Teacher) request.getAttribute("teacherInfo")).getCourse().equals("中文") ? "selected" : "" %>>中文</option>
+            </select>
+         </td>
+        </tr>
+
+    </table>
+
+        <button id="insertBtn">更新</button>
+        <input type="reset" onclick="resetForm()" value ="リセット">
     </form>
 </body>
 </html>

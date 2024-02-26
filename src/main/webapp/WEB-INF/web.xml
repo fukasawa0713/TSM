@@ -19,12 +19,26 @@
     <servlet-name>TeacherUpdateServlet</servlet-name>
     <servlet-class>jp.main.servlet.TeacherUpdateServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>UpdateSearchServlet</servlet-name>
+    <servlet-class>jp.main.servlet.UpdateSearchServlet</servlet-class>
+  </servlet>
 
   <servlet>
     <servlet-name>TeacherInsertServlet</servlet-name>
     <servlet-class>jp.main.servlet.TeacherInsertServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>TeacherCountServlet</servlet-name>
+    <servlet-class>jp.main.servlet.TeacherCountServlet</servlet-class>
+  </servlet>
+
+
+  <servlet-mapping>
+    <servlet-name>TeacherCountServlet</servlet-name>
+    <url-pattern>/TeacherCountServlet</url-pattern>
+  </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>TeacherSearchServlet</servlet-name>
@@ -39,6 +53,11 @@
   <servlet-mapping>
     <servlet-name>TeacherInsertServlet</servlet-name>
     <url-pattern>/TeacherInsertServlet</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>UpdateSearchServlet</servlet-name>
+    <url-pattern>/UpdateSearchServlet</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>

@@ -22,12 +22,29 @@ public class JdbcTest {
     }
 
     //  SQL実行
-    public static ResultSet executeQuery(String sql, String name) throws SQLException {
+    public static ResultSet executeQuery(String sql, String id,String name,String course) throws SQLException {
         Connection connection = null;
         try {
             connection = JdbcTest.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, id);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3,course);
+            return preparedStatement.executeQuery();
+        } catch (SQLException we) {
+            throw we;
+        }
+    }
+    public static ResultSet executeQuery(String sql, String id,String name,String gender, int age ,String course) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = JdbcTest.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, id);
+            preparedStatement.setString(2, name);
+            preparedStatement.setString(3,gender);
+            preparedStatement.setInt(4,age);
+            preparedStatement.setString(5,course);
             return preparedStatement.executeQuery();
         } catch (SQLException we) {
             throw we;
@@ -45,44 +62,52 @@ public class JdbcTest {
         }
     }
 
-    //  SQL実行
-    public static ResultSet executeQuery(String sql, String sclass, String name) throws SQLException {
+    public static ResultSet executeQuery(String sql ,int id) throws SQLException {
         Connection connection = null;
         try {
             connection = JdbcTest.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, sclass);
-            preparedStatement.setString(2, name);
+            preparedStatement.setInt(1, id);
             return preparedStatement.executeQuery();
         } catch (SQLException we) {
             throw we;
         }
     }
 
+
+
     //   SQL実行（更新系）
-    public static void executeUpdate(String sql, int id, String name) throws SQLException {
+    public static int executeUpdate(String sql, int id, String name, String gender, int age, String course) throws SQLException {
         Connection connection = null;
         try {
             connection = JdbcTest.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, name);
+            preparedStatement.setString(3, gender);
+            preparedStatement.setInt(4,age);
+            preparedStatement.setString(5, course);
             preparedStatement.executeUpdate();
         } catch (SQLException we) {
             throw we;
         }
+        return id;
     }
-    public static void executeInsert(String sql, int id, String name)throws SQLException{
+    public static int executeInsert(String sql, int id, String name, String gender, int age, String course) throws SQLException {
         Connection connection = null;
         try {
             connection = JdbcTest.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, name);
+            preparedStatement.setInt(3, age);
+            preparedStatement.setString(4, gender);
+            preparedStatement.setString(5, course);
             preparedStatement.executeUpdate();
         } catch (SQLException we) {
             throw we;
         }
+        return id;
     }
 
     //   Connectionクローズ

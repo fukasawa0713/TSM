@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html;charset=Shift_JIS" %>
+<%@ page language="java" contentType="text/html;charset=shift_jis" %>
 <%@ page import="java.util.List" %>
 <%@ page import="jp.main.model.Teacher" %>
 <html>
@@ -14,11 +14,12 @@
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 
     List<Teacher> teacherList = ((List<Teacher>) request.getAttribute("teacherList"));
+    request.setAttribute("teacherList",teacherList);
 %>
-<form id="searchForm" action="<%=request.getContextPath()%>/TeacherSearchServlet" method="GET">
-    教師番号:<input type="text" id="id" name="id" size="20">
-    名前：<input type="text" name="name" size="20">
-    コース：<select name="course">
+<form id="searchForm" action="<%=request.getContextPath()%>/TeacherSearchServlet" method="GET" >
+    教師番号:<input type="text" maxlength ="5" pattern ="^[0-9]*$" id="id" name="id" size="20">
+    名前：<input type="text" name="name" id= "name" size="20">
+    コース：<select name="course" id = "course">
         <option value=""></option>
         <option>英語</option>
         <option>数学</option>
@@ -26,7 +27,10 @@
         <option>中文</option>
     </select>
     <button type="submit">検索</button>
+
 </form>
+
+
 <table id="resultTable">
     <thead>
     <tr>
@@ -46,7 +50,12 @@
             <td><%= teacher.getGender() %></td>
             <td><%= teacher.getAge() %></td>
             <td><%= teacher.getCourse() %></td>
-            <td><button class="updateBtn">更新</button></td>
+            <td>
+            <form action = "<%=request.getContextPath()%>/UpdateSearchServlet" method ="GET">
+                <input type="hidden" id="teacherId" name="teacherId" value="<%= teacher.getId() %>">
+                <input type="submit"  name="teacherId" value="更新">
+            </form>
+            </td>
         </tr>
     <% } %>
     </tbody>
@@ -74,15 +83,14 @@
                 }
             });
         });
-
         // 更新ボタンクリック時の処理
         $(document).on('click', '.updateBtn', function() {
             // 更新ボタンがクリックされた行のデータを取得
             let row = $(this).closest('tr');
             let teacherId = row.find('td:eq(0)').text(); // 教師番号を取得
-            let teacherName = row.find('td:eq(1)').text(); // 名前を取得
             // ここで更新処理を実行するなどの追加の処理を行う
-            console.log("Update teacher with ID: " + teacherId + ", Name: " + teacherName);
+
+            console.log("Update teacher with ID: " + teacherId);
         });
     });
 

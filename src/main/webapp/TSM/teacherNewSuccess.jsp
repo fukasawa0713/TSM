@@ -10,5 +10,17 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
+<%
+        Integer teacherIdObj = (Integer) request.getAttribute("教師番号");
+                int teacherId = (teacherIdObj != null) ? teacherIdObj.intValue() : 0;
+        String name = (String) request.getAttribute("名前");
+%>
+
+
+教師番号：<%= teacherId%>名前：<%= name%><br>
+登録成功<br>
+<form action = "<%=request.getContextPath()%>/TSM/teacherList.jsp">
+<button id ="topBtn">トップページへ</button>
+</form>
 </body>
 </html>

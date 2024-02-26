@@ -2,8 +2,11 @@ package jp.main.servlet;
 
 import jp.main.GsonConverter;
 import jp.main.base.JdbcTest;
+import jp.main.model.Teacher;
 import jp.main.service.TeacherService;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +16,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class TeacherSearchServlet extends HttpServlet {
+public class UpdateSearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         TeacherService teacherService = new TeacherService();
@@ -24,20 +27,21 @@ public class TeacherSearchServlet extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             out = response.getWriter(); // PrintWriter を初期化
 
-            String teacherId = request.getParameter("id");
-            String teacherName = request.getParameter("name");
-            String course = request.getParameter("course");
+            String teacherId = request.getParameter("teacherId");
             response.setContentType("application/json;charset=UTF-8");
-            System.out.println(teacherId+"\t"+teacherName+"\t"+course);
+            System.out.println(teacherId);
+
+            Teacher teacher = teacherService.getInfoById(Integer.parseInt(teacherId));
+            request.setAttribute("teacherInfo",teacher);
+
+            request.getRequestDispatcher("/TSM/teacherUpdate.jsp").forward(request,response);
 
 
-            Map<String, Object> teacherList = teacherService.searchTeachers(teacherId,teacherName,course);
-
-            String jsonResponse = GsonConverter.toJson(teacherList);
-            // JSON形式のレスポンスを出力
-            out.print(jsonResponse);
-            out.flush();
-        } catch (IOException | SQLException e) {
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ServletException e) {
             throw new RuntimeException(e);
         } finally {
             if (out != null) {
