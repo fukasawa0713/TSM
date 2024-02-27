@@ -2,6 +2,8 @@
 <html>
 <head>
 <h1>‹³Žtî•ñ“o˜^</h1>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/js/jquery.validate.min.js"></script>
 </head>
 <body>
 <%
@@ -27,8 +29,5 @@
          <button id = "insertBtn">“o˜^</button>
          <input type ="reset" value = "ƒŠƒZƒbƒg">
     </form>
-
-
-
 </body>
 </html>

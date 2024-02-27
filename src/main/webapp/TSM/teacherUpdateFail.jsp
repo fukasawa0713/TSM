@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=Shift_JIS" %>
 <html>
 <head>
-<h1>‹³Žtî•ñ“o˜^</h1>
+<h1>‹³Žtî•ñXV</h1>
 </head>
 <body>
 <%

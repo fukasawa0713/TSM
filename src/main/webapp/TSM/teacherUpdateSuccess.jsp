@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html;charset=Shift_JIS" %>
 <html>
 <head>
-<h1>教師情報登録</h1>
+<h1>教師情報更新</h1>
 </head>
 <body>
 <%
@@ -14,7 +14,7 @@
 %>
 教師番号:<%=tid%>の情報を更新しました。<br>
 <form action = "<%=request.getContextPath()%>/TeacherInfoServlet">
-<button id ="topBtn">トップページへ</button>
+<button id ="topBtn">教師一覧</button>
 </form>
 </body>
 </html>

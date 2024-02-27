@@ -28,18 +28,22 @@ public class TeacherSearchServlet extends HttpServlet {
             String teacherName = request.getParameter("name");
             String course = request.getParameter("course");
             response.setContentType("application/json;charset=UTF-8");
-            System.out.println(teacherId+"\t"+teacherName+"\t"+course);
+            System.out.println(teacherId + "\t" + teacherName + "\t" + course);
 
-
-            Map<String, Object> teacherList = teacherService.searchTeachers(teacherId,teacherName,course);
+            Map<String, Object> teacherList = teacherService.searchTeachers(teacherId, teacherName, course);
 
             String jsonResponse = GsonConverter.toJson(teacherList);
             // JSON形式のレスポンスを出力
             out.print(jsonResponse);
             out.flush();
-        } catch (IOException | SQLException e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            // 入出力例外の処理
+            throw new RuntimeException("Error occurred while processing input/output", e);
+        } catch (SQLException e) {
+            // SQL例外の処理
+            throw new RuntimeException("Error occurred while accessing database", e);
         } finally {
+            // リソースのクローズ
             if (out != null) {
                 out.close();
             }

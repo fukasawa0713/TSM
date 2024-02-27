@@ -12,6 +12,7 @@ public class TeacherDAO {
     public Teacher getTeacher(int id) throws SQLException {
         // SQL文を修正し、? を使用してプレースホルダーを指定する
         String sql = "SELECT * FROM teacher where id =?";
+
         ResultSet res = JdbcTest.executeQuery(sql, id);
         Teacher tc = new Teacher();
 
@@ -32,7 +33,8 @@ public class TeacherDAO {
 
 
     public Map<String, Object> searchTeachers(String id, String name, String course) throws SQLException {
-        String sql = "SELECT * FROM teacher WHERE id = ? or name =? or course = ?";
+        String sql = "SELECT * FROM teacher WHERE (id = ? OR name = ? OR course = ?) ";
+
         try (ResultSet res = JdbcTest.executeQuery(sql, id, name, course)) {
             Map<String, Object> result = new HashMap<>();
             List<Map<String, Object>> teacherList = new ArrayList<>();
@@ -91,6 +93,7 @@ public class TeacherDAO {
     public boolean UpdateTeacher(int id, String name, String gender, int age, String course) throws SQLException {
         boolean success = false;
         String sql = "update teacher set name =? ,gender =?, age = ?, course = ? where id = ?";
+
         int rowUpdate = JdbcTest.executeUpdate(sql, id, name, gender, age, course);
         if (rowUpdate > 0) {
             success = true;

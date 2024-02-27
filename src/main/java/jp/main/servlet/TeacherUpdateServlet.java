@@ -1,6 +1,7 @@
 package jp.main.servlet;
 
 
+import jp.main.base.JdbcTest;
 import jp.main.model.Teacher;
 import jp.main.service.TeacherService;
 
@@ -42,6 +43,8 @@ public class TeacherUpdateServlet extends HttpServlet {
 
         } catch (IOException | ServletException | SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            JdbcTest.closeConnection(conn);
         }
     }
 }

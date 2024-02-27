@@ -1,6 +1,5 @@
 package jp.main.servlet;
 
-
 import jp.main.base.JdbcTest;
 import jp.main.model.Teacher;
 import jp.main.service.TeacherService;
@@ -18,7 +17,7 @@ import java.util.List;
 public class TeacherInfoServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TeacherService teacherService = new TeacherService();
         Connection conn = null;
 
@@ -33,9 +32,17 @@ public class TeacherInfoServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/TSM/teacherList.jsp");
             dispatcher.forward(request, response);
 
-        } catch (SQLException | IOException | ServletException e) {
-            throw new RuntimeException(e);
-        }finally {
+        } catch (SQLException e) {
+            // SQL に関するエラーの処理
+            throw new ServletException("Error fetching teacher information", e);
+        } catch (IOException e) {
+            // 入出力に関するエラーの処理
+            throw new IOException("Error in input/output", e);
+        } catch (ServletException e) {
+            // サーブレットに関するエラーの処理
+            throw new ServletException("Servlet exception occurred", e);
+        } finally {
+            // finally ブロックでコネクションをクローズ
             JdbcTest.closeConnection(conn);
         }
     }

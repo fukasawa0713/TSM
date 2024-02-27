@@ -4,7 +4,6 @@ import jp.main.base.JdbcTest;
 import jp.main.model.Teacher;
 import jp.main.service.TeacherService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,16 +19,16 @@ public class TeacherInsertServlet extends HttpServlet {
         response.setCharacterEncoding("Shift_JIS");
         Connection conn = null;
 
-        // フォームから送信されたデータを取得
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String gender = request.getParameter("gender");
-        int age = Integer.parseInt(request.getParameter("age"));
-        String course = request.getParameter("course");
-
-        TeacherService teacherService = new TeacherService();
-
         try {
+            // フォームから送信されたデータを取得
+            int id = Integer.parseInt(request.getParameter("id"));
+            String name = request.getParameter("name");
+            String gender = request.getParameter("gender");
+            int age = Integer.parseInt(request.getParameter("age"));
+            String course = request.getParameter("course");
+
+            TeacherService teacherService = new TeacherService();
+
             // 既存のIDが存在するか確認
             boolean idExists = teacherService.countId(id);
 
@@ -37,38 +36,26 @@ public class TeacherInsertServlet extends HttpServlet {
                 // インサート処理を呼び出し、結果を受け取る
                 boolean success = teacherService.InsertTeacher(id, name, age, gender, course);
                 if (success) {
-                    try {
-                        Teacher tc = teacherService.getInfoById(id);
-                        request.setAttribute("教師番号",tc.getId());
-                        request.setAttribute("名前",tc.getName());
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    request.getRequestDispatcher("/TSM/teacherNewSuccess.jsp").forward(request,response);
-
+                    Teacher tc = teacherService.getInfoById(id);
+                    request.setAttribute("教師番号", tc.getId());
+                    request.setAttribute("名前", tc.getName());
+                    request.getRequestDispatcher("/TSM/teacherNewSuccess.jsp").forward(request, response);
                 } else {
-                    try {
-                        Teacher tc = teacherService.getInfoById(id);
-                        request.setAttribute("教師番号",tc.getId());
-                        request.setAttribute("名前",tc.getName());
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    request.getRequestDispatcher("/TSM/teacherNewSuccess.jsp").forward(request,response);
-
+                    request.getRequestDispatcher("/TSM/teacherNewFail.jsp").forward(request, response);
                 }
             } else {
                 // 既存のIDが存在する場合は失敗ページにリダイレクト
                 response.sendRedirect(request.getContextPath() + "/TSM/teacherNewFail.jsp");
             }
+        } catch (NumberFormatException e) {
+            // 数値のパースに失敗した場合の処理
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid data format: ID or Age must be an integer");
         } catch (SQLException e) {
+            // SQL に関するエラーの処理
             throw new ServletException("Error inserting teacher data", e);
-        }finally {
+        } finally {
+            // finally ブロックでコネクションをクローズ
             JdbcTest.closeConnection(conn);
         }
     }
-
-
 }
-

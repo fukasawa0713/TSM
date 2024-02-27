@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class UpdateSearchServlet extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         TeacherService teacherService = new TeacherService();
         PrintWriter out = null;
         Connection conn = null;
@@ -32,14 +32,24 @@ public class UpdateSearchServlet extends HttpServlet {
             System.out.println(teacherId);
 
             Teacher teacher = teacherService.getInfoById(Integer.parseInt(teacherId));
-            request.setAttribute("teacherInfo",teacher);
+            request.setAttribute("teacherInfo", teacher);
 
-            request.getRequestDispatcher("/TSM/teacherUpdate.jsp").forward(request,response);
+            request.getRequestDispatcher("/TSM/teacherUpdate.jsp").forward(request, response);
 
-
-        } catch (IOException | SQLException | ServletException e) {
-            throw new RuntimeException(e);
+        } catch (IOException e) {
+            // 入出力例外の処理
+            throw new RuntimeException("Error occurred while processing input/output", e);
+        } catch (SQLException e) {
+            // SQL例外の処理
+            // エラーメッセージとともにリダイレクトする
+            String errorMessage = "Error occurred while accessing database: " + e.getMessage();
+            request.setAttribute("errorMessage", errorMessage);
+            response.sendRedirect(request.getContextPath() + "/errorPage.jsp");
+        } catch (ServletException e) {
+            // サーブレット例外の処理
+            throw new RuntimeException("Servlet exception occurred", e);
         } finally {
+            // リソースのクローズ
             if (out != null) {
                 out.close();
             }

@@ -17,7 +17,7 @@
     request.setAttribute("teacherList",teacherList);
 %>
 <form id="searchForm" action="<%=request.getContextPath()%>/TeacherSearchServlet" method="POST" >
-    教師番号:<input type="text" maxlength ="5" pattern ="^[0-9]*$" id="id" name="id" size="20">
+    教師番号:<input type="text" maxlength = "5" pattern ="^[0-9]*$" id="id" name="id" size="20">
     名前：<input type="text" name="name" id= "name" size="20">
     コース：<select name="course" id = "course">
         <option value=""></option>
@@ -26,10 +26,8 @@
         <option>日本語</option>
         <option>中文</option>
     </select>
-    <button type="submit">検索</button>
-
+    <button type="submit" onclick ="clickEvent()">検索</button>
 </form>
-
 
 <table id="resultTable">
     <thead>
@@ -94,6 +92,22 @@
         });
     });
 
+    function clickEvent() {
+        let id = $('#id').val();
+        let name = $('#name').val();
+        let course = $('#course').val();
+
+        // 必要な条件をチェックする
+        if (id === '' && name === '' && course === '') {
+            // 全ての条件が空の場合にアラートを表示
+            alert("少なくとも1つの検索条件を入力してください。");
+            event.preventDefault(); // フォームの送信をキャンセル
+        }else{
+            $('#searchForm').submit();
+        }
+    }
+
+
     // 検索結果を表示する関数
     function searchTable(teacherInfo) {
         let tableBody = $('#resultTable tbody');
@@ -104,6 +118,20 @@
             let row = $('<tr>');
             let messageCell = $('<td colspan="6">').text("該当情報はありませんでした").appendTo(row);
             row.appendTo(tableBody);
+            function clickEvent() {
+                    let id = $('#id').val();
+                    let name = $('#name').val();
+                    let course = $('#course').val();
+
+                    // 必要な条件をチェックする
+                    if (id === '' && name === '' && course === '') {
+                        // 全ての条件が空の場合にアラートを表示
+                        alert("少なくとも1つの検索条件を入力してください。");
+
+                    }else{
+                        $('#searchForm').submit();
+                    }
+                }
         } else if ($.isArray(teacherInfo)) {
             // teacherInfoが配列の場合の処理
             $.each(teacherInfo, function(index, teacher) {
@@ -124,6 +152,9 @@
         }
     }
 </script>
+<form action ="<%=request.getContextPath()%>/TeacherInfoServlet" method ="GET" >
+    <button type = "submit">教師一覧</button>
+</form>
 
 </body>
 </html>
