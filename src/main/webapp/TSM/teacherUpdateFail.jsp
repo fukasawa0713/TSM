@@ -18,7 +18,7 @@
 %>
    更新に失敗した。<br>
 
-<form action = "<%=request.getContextPath()%>/index.jsp" method = "POST">
+<form action = "<%=request.getContextPath()%>/TeacherInfoServlet" method = "POST">
     <button id ="topBtn">トップページへ</button>
 </form>
 

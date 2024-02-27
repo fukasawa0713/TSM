@@ -8,10 +8,12 @@
     request.setCharacterEncoding("Shift_JIS");
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
 
-更新成功<br>
-<form action = "<%=request.getContextPath()%>/index.jsp">
+    Integer tid = (Integer)request.getAttribute("番号");
+
+%>
+教師番号:<%=tid%>の情報を更新しました。<br>
+<form action = "<%=request.getContextPath()%>/TeacherInfoServlet">
 <button id ="topBtn">トップページへ</button>
 </form>
 </body>

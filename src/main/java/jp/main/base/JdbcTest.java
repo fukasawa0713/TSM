@@ -82,11 +82,11 @@ public class JdbcTest {
         try {
             connection = JdbcTest.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, id);
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, gender);
-            preparedStatement.setInt(4,age);
-            preparedStatement.setString(5, course);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, gender);
+            preparedStatement.setInt(3,age);
+            preparedStatement.setString(4, course);
+            preparedStatement.setInt(5, id);
             preparedStatement.executeUpdate();
         } catch (SQLException we) {
             throw we;

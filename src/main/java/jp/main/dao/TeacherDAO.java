@@ -32,7 +32,7 @@ public class TeacherDAO {
 
 
     public Map<String, Object> searchTeachers(String id, String name, String course) throws SQLException {
-        String sql = "SELECT * FROM teacher WHERE id = ? AND name =? AND course = ?";
+        String sql = "SELECT * FROM teacher WHERE id = ? or name =? or course = ?";
         try (ResultSet res = JdbcTest.executeQuery(sql, id, name, course)) {
             Map<String, Object> result = new HashMap<>();
             List<Map<String, Object>> teacherList = new ArrayList<>();

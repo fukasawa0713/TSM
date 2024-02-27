@@ -32,6 +32,7 @@ public class TeacherUpdateServlet extends HttpServlet {
 
             boolean success = teacherService.UpdateTeacher(teacherId, teacherName, gender, age, course);
             if (success) {
+                request.setAttribute("番号",teacherId);
                 request.getRequestDispatcher("/TSM/teacherUpdateSuccess.jsp").forward(request,response);
 
             } else {
