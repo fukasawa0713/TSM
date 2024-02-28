@@ -42,19 +42,19 @@
     <!-- 性別 -->
     <input type="hidden" id="gender" name="gender" value="<%= gender %>"><br>
     <% if (!gender.equals(tGender)) { %>
-        性別<%=tGender%>→性別:<%=gender%><br>
+        性別:<%=tGender%>→性別:<%=gender%><br>
     <% } %>
 
     <!-- 年齢 (非表示) -->
     <input type="hidden" id="age" name="age" value="<%= age %>"><br>
     <% if (!age.equals(tage.toString())) { %>
-        年齢<%=tage%>→年齢:<%=age%><br>
+        年齢:<%=tage%>→年齢:<%=age%><br>
     <% } %>
 
     <!-- コース -->
     <input type="hidden" id="course" name="course" value="<%= course %>"><br>
     <% if (!course.equals(subject)) { %>
-        コース<%=subject%>→コース;<%=course%><br>
+        コース:<%=subject%>→コース:<%=course%><br>
     <% } %>
 
     <!-- 更新ボタン -->

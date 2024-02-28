@@ -122,4 +122,21 @@ public class JdbcTest {
     }
 
 
+    public static ResultSet executeQuery(String sql, Object[] array) throws SQLException {
+        Connection connection = null;
+        try {
+            connection = JdbcTest.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            // array の要素を順番にプリペアドステートメントにセットする
+            for (int i = 0; i < array.length; i++) {
+                preparedStatement.setObject(i + 1, array[i]);
+            }
+
+            return preparedStatement.executeQuery();
+        } catch (SQLException ex) {
+            throw ex;
+        }
+    }
+
 }

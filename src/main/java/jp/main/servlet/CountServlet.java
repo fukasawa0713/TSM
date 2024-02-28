@@ -1,19 +1,16 @@
 package jp.main.servlet;
 
 import jp.main.service.TeacherService;
-
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class CountServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         Connection conn = null;
         PrintWriter out = null;
         TeacherService teacherService = new TeacherService();
@@ -21,16 +18,15 @@ public class CountServlet extends HttpServlet {
         try {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
+            out = response.getWriter();
 
             String teacherId = request.getParameter("id");
-            response.setContentType("application/json:charset=UTF-8");
+            System.out.println(teacherId);
 
             boolean teacherExists = teacherService.countId(Integer.parseInt(teacherId));
-            String jsonResponse = "{\"exists\": " + teacherExists + "}";
+            out.print(teacherExists); // Send the response back to the client
 
-            out = response.getWriter();
-            out.print(jsonResponse);
-        } catch (UnsupportedEncodingException | SQLException e) {
+        } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         } finally {
             if (out != null) {

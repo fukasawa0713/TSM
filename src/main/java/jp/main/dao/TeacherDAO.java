@@ -33,9 +33,23 @@ public class TeacherDAO {
 
 
     public Map<String, Object> searchTeachers(String id, String name, String course) throws SQLException {
-        String sql = "SELECT * FROM teacher WHERE (id = ? OR name = ? OR course = ?) ";
+        StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM teacher WHERE 1=1");
+        List<Object> params = new ArrayList<>();
 
-        try (ResultSet res = JdbcTest.executeQuery(sql, id, name, course)) {
+        if (id != null && !id.isEmpty()) {
+            sqlBuilder.append(" AND id = ?");
+            params.add(id);
+        }
+        if (name != null && !name.isEmpty()) {
+            sqlBuilder.append(" AND name = ?");
+            params.add(name);
+        }
+        if (course != null && !course.isEmpty()) {
+            sqlBuilder.append(" AND course = ?");
+            params.add(course);
+        }
+
+        try (ResultSet res = JdbcTest.executeQuery(sqlBuilder.toString(), params.toArray())) {
             Map<String, Object> result = new HashMap<>();
             List<Map<String, Object>> teacherList = new ArrayList<>();
             while (res.next()) {
@@ -52,6 +66,7 @@ public class TeacherDAO {
             return result;
         }
     }
+
 
     public List<Teacher> getAllTeachers() throws SQLException {
         List<Teacher> teacherList = new ArrayList<>();
@@ -113,12 +128,4 @@ public class TeacherDAO {
         }
         return exists;
     }
-
-
-
 }
-
-
-
-
-

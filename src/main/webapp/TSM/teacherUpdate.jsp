@@ -29,7 +29,7 @@
         </td>
         <tr>
             <th>年齢:</th>
-            <td><input type="text"  name = "age" id="teacherAge" value="<%= ((Teacher) request.getAttribute("teacherInfo")).getAge() %>"></td>
+            <td><input type="text" pattern="^[0-9]*$" name = "age" id="teacherAge" value="<%= ((Teacher) request.getAttribute("teacherInfo")).getAge() %>" title = "半角数字で入力してください"></td>
         </tr>
         <tr>
         <th>コース:</th>

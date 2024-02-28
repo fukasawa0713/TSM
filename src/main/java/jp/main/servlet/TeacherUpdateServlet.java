@@ -2,10 +2,9 @@ package jp.main.servlet;
 
 
 import jp.main.base.JdbcTest;
-import jp.main.model.Teacher;
+
 import jp.main.service.TeacherService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,13 +36,13 @@ public class TeacherUpdateServlet extends HttpServlet {
                 request.getRequestDispatcher("/TSM/teacherUpdateSuccess.jsp").forward(request,response);
 
             } else {
+                request.setAttribute("errorMessage", "年齢は数値で入力してください。");
                 request.getRequestDispatcher("/TSM/teacherUpdateFail.jsp").forward(request,response);
-
             }
 
         } catch (IOException | ServletException | SQLException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             JdbcTest.closeConnection(conn);
         }
     }
