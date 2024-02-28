@@ -155,6 +155,8 @@
 <form action ="<%=request.getContextPath()%>/TeacherInfoServlet" method ="GET" >
     <button type = "submit">教師一覧</button>
 </form>
-
+<form action ="<%=request.getContextPath()%>/index.jsp" method ="POST" >
+    <button type = "submit">トップページ</button>
+</form>
 </body>
 </html>

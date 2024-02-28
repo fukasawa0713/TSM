@@ -23,7 +23,7 @@
    <% } else { %>
 
 <form action = "<%=request.getContextPath()%>/TeacherInfoServlet" method = "POST">
-    <button id ="topBtn">トップページへ</button>
+    <button id ="topBtn">教師一覧</button>
 </form>
 
 </body>

@@ -2,6 +2,7 @@
 <html>
 <head>
 <h1>‹³Žtî•ñXV</h1>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/TSM/style.css">
 </head>
 <body>
 <%

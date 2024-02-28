@@ -4,6 +4,7 @@
 <head>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <h1>教師情報更新</h1>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/TSM/style.css">
 </head>
 <body>
 <%
@@ -21,7 +22,7 @@
             <th>名前:</th>
             <td><input type="text" name ="teacherName" id="teacherName" value="<%= ((Teacher) request.getAttribute("teacherInfo")).getName() %>"></td>
         </tr>
-        <td>
+        <td class ="gender">
             <input type="radio" name="gender" id="male"  value="男" <%= ((Teacher) request.getAttribute("teacherInfo")).getGender().equals("男") ? "checked" : "" %>>
             <label for="male">男</label>
             <input type="radio" name="gender" id="female"  value="女" <%= ((Teacher) request.getAttribute("teacherInfo")).getGender().equals("女") ? "checked" : "" %>>
@@ -48,6 +49,9 @@
 
         <button id="insertBtn">更新</button>
         <input type="reset" onclick="resetForm()" value ="リセット">
+    </form>
+    <form action ="<%=request.getContextPath()%>/index.jsp" method ="POST" >
+        <button type = "submit">トップページ</button>
     </form>
 </body>
 </html>
