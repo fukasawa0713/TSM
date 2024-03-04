@@ -3,12 +3,18 @@ package jp.main.dao;
 import jp.main.base.JdbcTest;
 import jp.main.model.Teacher;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
 
 public class TeacherDAO {
+
+
+
+
     public Teacher getTeacher(int id) throws SQLException {
         // SQL文を修正し、? を使用してプレースホルダーを指定する
         String sql = "SELECT * FROM teacher where id =?";
@@ -70,7 +76,7 @@ public class TeacherDAO {
 
     public List<Teacher> getAllTeachers() throws SQLException {
         List<Teacher> teacherList = new ArrayList<>();
-        String sql = "SELECT * FROM teacher";
+        String sql = "SELECT * FROM teacher limit 10";
         ResultSet res = JdbcTest.executeQuery(sql);
         while (res.next()) {
             int id = res.getInt("id");
@@ -127,5 +133,44 @@ public class TeacherDAO {
             }
         }
         return exists;
+    }
+
+    public Map<String, Object> getTeachersPerPage;
+    public List<Teacher> getTeachersPerPage(int page, int pageSize) throws SQLException {
+        List<Teacher> teacherList = new ArrayList<>();
+        String sql = "SELECT * FROM teacher LIMIT ?, ?";
+        int offset = (page - 1) * pageSize;
+
+        try (PreparedStatement statement = JdbcTest.getConnection().prepareStatement(sql)) {
+            statement.setInt(1, offset);
+            statement.setInt(2, pageSize);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Teacher teacher = new Teacher();
+                teacher.setId(resultSet.getInt("id"));
+                teacher.setName(resultSet.getString("name"));
+                teacher.setGender(resultSet.getString("gender"));
+                teacher.setAge(resultSet.getInt("age"));
+                teacher.setCourse(resultSet.getString("course"));
+
+                teacherList.add(teacher);
+            }
+        }
+
+        return teacherList;
+    }
+
+
+
+    public int getTotalTeacherCount() throws SQLException {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM teacher";
+        try (ResultSet rs = JdbcTest.executeQuery(sql) ){
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        }
+        return count;
     }
 }

@@ -3,8 +3,17 @@
 <%@ page import="jp.main.model.Teacher" %>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/TSM/style.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/TSM/style.css">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    .example li {display:inline;}
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+
 </head>
 <body>
 <%@ include file = "head.jsp"%>
@@ -15,6 +24,9 @@
 
     List<Teacher> teacherList = ((List<Teacher>) request.getAttribute("teacherList"));
     request.setAttribute("teacherList",teacherList);
+
+    int totalPages = ((Integer)request.getAttribute("totalPages"));
+    int currentPage = ((Integer)request.getAttribute("currentPage"));
 %>
 <form id="searchForm" action="<%=request.getContextPath()%>/TeacherSearchServlet" method="POST" >
     ã≥étî‘çÜ:<input type="text" maxlength = "5" pattern ="^[0-9]*$" id="id" name="id" size="20">
@@ -29,7 +41,7 @@
     <button type="submit" onclick ="clickEvent()">åüçı</button>
 </form>
 
-<table id="resultTable">
+<table class = "resultTable" id="resultTable">
     <thead>
     <tr>
         <th>ã≥étî‘çÜ</th>
@@ -58,6 +70,15 @@
     <% } %>
     </tbody>
 </table>
+
+<ul class="pagination">
+    <% for (int i = 1; i <= totalPages; i++) { %>
+        <li class="page-item <% if (i == currentPage) { %>active<% } %>">
+            <a class="page-link" href="<%=request.getContextPath()%>/TeacherInfoServlet?page=<%=i%>"><%=i%></a>
+        </li>
+    <% } %>
+</ul>
+
 
 <script type="text/javascript">
     $(document).ready(function() {

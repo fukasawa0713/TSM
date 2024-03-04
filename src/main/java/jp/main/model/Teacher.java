@@ -14,6 +14,9 @@ public class Teacher {
     private List<Integer> ageList;
     private List<String> courseList;
 
+    private int pageSize;
+    private int offset;
+
     public int getId() {
         return id;
     }
@@ -94,5 +97,21 @@ public class Teacher {
 
     public void setIdList(List<Integer> idList) {
         this.idList = idList;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 }

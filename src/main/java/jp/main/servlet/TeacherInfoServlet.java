@@ -25,9 +25,20 @@ public class TeacherInfoServlet extends HttpServlet {
             request.setCharacterEncoding("shift_jis");
             response.setCharacterEncoding("shift_jis");
 
-            List<Teacher> teacherList = teacherService.getAllTeachers();
+            // ページング関連のパラメータを取得
+            int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+            int pageSize = 10; // 1ページあたりのレコード数
+
+            // ページングに応じた教師情報を取得
+            List<Teacher> teacherList = teacherService.getTeachersPerPage(page, pageSize);
+
+            // 全体のレコード数を取得
+            int totalRecords = teacherService.getTotalTeachersCount();
+            int totalPages = (int) Math.ceil((double) totalRecords / pageSize);
 
             request.setAttribute("teacherList", teacherList);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("currentPage", page);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/TSM/teacherList.jsp");
             dispatcher.forward(request, response);
@@ -46,4 +57,5 @@ public class TeacherInfoServlet extends HttpServlet {
             JdbcTest.closeConnection(conn);
         }
     }
+
 }

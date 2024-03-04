@@ -19,6 +19,7 @@ public class TeacherSearchServlet extends HttpServlet {
         TeacherService teacherService = new TeacherService();
         PrintWriter out = null;
         Connection conn = null;
+
         try {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");

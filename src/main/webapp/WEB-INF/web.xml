@@ -11,6 +11,11 @@
   </servlet>
 
   <servlet>
+    <servlet-name>PagingServlet</servlet-name>
+    <servlet-class>jp.main.servlet.PagingServlet</servlet-class>
+  </servlet>
+
+  <servlet>
     <servlet-name>TeacherSearchServlet</servlet-name>
     <servlet-class>jp.main.servlet.TeacherSearchServlet</servlet-class>
   </servlet>
@@ -43,6 +48,11 @@
   <servlet-mapping>
     <servlet-name>TeacherCountServlet</servlet-name>
     <url-pattern>/TeacherCountServlet</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>PagingServlet</servlet-name>
+    <url-pattern>/PagingServlet</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
