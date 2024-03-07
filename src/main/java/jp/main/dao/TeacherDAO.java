@@ -12,13 +12,8 @@ import java.util.*;
 
 public class TeacherDAO {
 
-
-
-
     public Teacher getTeacher(int id) throws SQLException {
-        // SQL文を修正し、? を使用してプレースホルダーを指定する
         String sql = "SELECT * FROM teacher where id =?";
-
         ResultSet res = JdbcTest.executeQuery(sql, id);
         Teacher tc = new Teacher();
 
@@ -37,9 +32,8 @@ public class TeacherDAO {
         return tc;
     }
 
-
-    public Map<String, Object> searchTeachers(String id, String name, String course) throws SQLException {
-        StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM teacher WHERE 1=1");
+    public Map<String, Object> searchTeachers(String id, String name, String course, int page, int pageSize) throws SQLException {
+        StringBuilder sqlBuilder = new StringBuilder("SELECT * FROM teacher WHERE 1=1 ");
         List<Object> params = new ArrayList<>();
 
         if (id != null && !id.isEmpty()) {
@@ -55,6 +49,11 @@ public class TeacherDAO {
             params.add(course);
         }
 
+        sqlBuilder.append(" LIMIT ?, ?");
+        int offset = (page - 1) * pageSize;
+        params.add(offset);
+        params.add(pageSize);
+
         try (ResultSet res = JdbcTest.executeQuery(sqlBuilder.toString(), params.toArray())) {
             Map<String, Object> result = new HashMap<>();
             List<Map<String, Object>> teacherList = new ArrayList<>();
@@ -67,16 +66,36 @@ public class TeacherDAO {
                 teacherInfo.put("course", res.getString("course"));
                 teacherList.add(teacherInfo);
             }
-            System.out.println(teacherList);
             result.put("teacherInfo", teacherList);
             return result;
         }
     }
+    public int getTotalMatchingTeachersCount(String id, String name, String course) throws SQLException {
+        StringBuilder countSqlBuilder = new StringBuilder("SELECT COUNT(*) FROM teacher WHERE 1=1 ");
+        List<Object> params = new ArrayList<>();
 
+        if (id != null && !id.isEmpty()) {
+            countSqlBuilder.append(" AND id = ?");
+            params.add(id);
+        }
+        if (name != null && !name.isEmpty()) {
+            countSqlBuilder.append(" AND name = ?");
+            params.add(name);
+        }
+        if (course != null && !course.isEmpty()) {
+            countSqlBuilder.append(" AND course = ?");
+            params.add(course);
+        }
+
+        try (ResultSet countResult = JdbcTest.executeQuery(countSqlBuilder.toString(), params.toArray())) {
+            countResult.next();
+            return countResult.getInt(1);
+        }
+    }
 
     public List<Teacher> getAllTeachers() throws SQLException {
         List<Teacher> teacherList = new ArrayList<>();
-        String sql = "SELECT * FROM teacher limit 10";
+        String sql = "SELECT * FROM teacher ";
         ResultSet res = JdbcTest.executeQuery(sql);
         while (res.next()) {
             int id = res.getInt("id");
@@ -97,13 +116,10 @@ public class TeacherDAO {
         return teacherList;
     }
 
-
     public boolean InsertTeacher(int id, String name, int age, String gender, String course) throws SQLException {
         boolean success = false;
         String sql = "INSERT into teacher (id, name, age, gender, course) values (?, ?, ?, ?, ?)";
         int rowsInsert = JdbcTest.executeInsert(sql, id, name, gender, age, course);
-
-        System.out.println(rowsInsert);
 
         if (rowsInsert > 0) {
             success = true;
@@ -135,7 +151,6 @@ public class TeacherDAO {
         return exists;
     }
 
-    public Map<String, Object> getTeachersPerPage;
     public List<Teacher> getTeachersPerPage(int page, int pageSize) throws SQLException {
         List<Teacher> teacherList = new ArrayList<>();
         String sql = "SELECT * FROM teacher LIMIT ?, ?";
@@ -161,9 +176,7 @@ public class TeacherDAO {
         return teacherList;
     }
 
-
-
-    public int getTotalTeacherCount() throws SQLException {
+    public int getTotalTeachersCount() throws SQLException {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM teacher";
         try (ResultSet rs = JdbcTest.executeQuery(sql) ){
@@ -173,4 +186,6 @@ public class TeacherDAO {
         }
         return count;
     }
+
+
 }

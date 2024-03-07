@@ -18,8 +18,8 @@ public class TeacherService {
         return dao.getAllTeachers();
     }
 
-    public Map<String, Object> searchTeachers(String id, String name, String course) throws SQLException {
-        return dao.searchTeachers(id, name, course);
+    public Map<String, Object> searchTeachers(String id, String name, String course, int page, int pageSize) throws SQLException {
+        return dao.searchTeachers(id, name, course,page,pageSize);
     }
 
     public boolean InsertTeacher(int id, String name, int age, String gender, String course) throws SQLException {
@@ -39,6 +39,11 @@ public class TeacherService {
     }
 
     public int getTotalTeachersCount() throws SQLException {
-        return dao.getTotalTeacherCount();
+        return dao.getTotalTeachersCount();
+    }
+
+
+    public int getTotalMatchingTeachersCount(String teacherId, String teacherName, String course) throws SQLException {
+        return dao.getTotalMatchingTeachersCount(teacherId,teacherName,course);
     }
 }

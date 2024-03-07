@@ -43,7 +43,12 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-    <p><a href="<%=request.getContextPath()%>/TeacherInfoServlet" method ="GET">Л≥ОtПоХс</a></p>
-    <p><a href="<%=request.getContextPath()%>/TSM/teacherNew.jsp">Л≥ОtУoШ^</a></p>
+    <form action="<%=request.getContextPath()%>/TeacherInfoServlet" method="POST">
+        <button type="submit">Л≥ОtПоХс</button>
+    </form>
+    <form action="<%=request.getContextPath()%>/TSM/teacherNew.jsp">
+        <button type="submit">Л≥ОtУoШ^</button>
+    </form>
+
 </body>
 </html>
